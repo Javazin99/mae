@@ -21,27 +21,44 @@ const images = [
 
 const gallery = document.querySelector('.gallery');
 
-images.forEach(src => {
-    const img = document.createElement('img');
-    img.src = src;
-    img.alt = 'Momentos do casal';
-    img.addEventListener('click', () => openModal(src));
-    gallery.appendChild(img);
-});
+let currentIndex = 0;
 
-// Modal para visualização ampliada
-function openModal(src) {
+function showModalWithIndex(index) {
+    currentIndex = index;
     let modal = document.createElement('div');
     modal.className = 'modal';
     modal.innerHTML = `
         <div class="modal-bg"></div>
-        <img src="${src}" class="modal-img" />
+        <button class="slide-btn prev">&#10094;</button>
+        <img src="${images[index]}" class="modal-img" />
+        <button class="slide-btn next">&#10095;</button>
         <span class="close">&times;</span>
     `;
     document.body.appendChild(modal);
     document.body.style.overflow = 'hidden';
     modal.querySelector('.close').onclick = closeModal;
     modal.querySelector('.modal-bg').onclick = closeModal;
+    modal.querySelector('.prev').onclick = (e) => { e.stopPropagation(); slidePhoto(-1); };
+    modal.querySelector('.next').onclick = (e) => { e.stopPropagation(); slidePhoto(1); };
+}
+
+function slidePhoto(direction) {
+    const modalImg = document.querySelector('.modal-img');
+    if (!modalImg) return;
+    currentIndex = (currentIndex + direction + images.length) % images.length;
+    modalImg.src = images[currentIndex];
+}
+
+// Atualiza a galeria para usar o novo modal com slide
+if (gallery) {
+    gallery.innerHTML = '';
+    images.forEach((src, idx) => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = 'Momentos do casal';
+        img.addEventListener('click', () => showModalWithIndex(idx));
+        gallery.appendChild(img);
+    });
 }
 
 function closeModal() {
@@ -75,6 +92,32 @@ modalStyle.innerHTML = `
 }
 `;
 document.head.appendChild(modalStyle);
+
+// Adiciona estilo para os botões de slide
+const slideStyle = document.createElement('style');
+slideStyle.innerHTML = `
+.slide-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.7);
+    border: none;
+    color: #ffb6b9;
+    font-size: 2.5rem;
+    padding: 0.2em 0.6em;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 4;
+    transition: background 0.2s;
+}
+.slide-btn:hover {
+    background: #ffb6b9;
+    color: #fff;
+}
+.slide-btn.prev { left: 18px; }
+.slide-btn.next { right: 18px; }
+`;
+document.head.appendChild(slideStyle);
 
 // Presente animado ao abrir o site
 window.addEventListener('DOMContentLoaded', () => {
