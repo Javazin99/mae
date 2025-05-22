@@ -1,0 +1,178 @@
+/* Estilo principal para o site do casal - responsivo e moderno */
+
+:root {
+    --primary: #ffb6b9;
+    --secondary: #fae3d9;
+    --accent: #bbded6;
+    --text: #444;
+    --white: #fff;
+    --shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', Arial, sans-serif;
+    background: var(--secondary);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+header {
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    color: var(--white);
+    text-align: center;
+    padding: 2rem 1rem 1rem 1rem;
+    box-shadow: var(--shadow);
+}
+
+header h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.8rem;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: 2px;
+}
+
+header p {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.2rem;
+    padding: 2rem 1rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.gallery img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.gallery img:hover {
+    transform: scale(1.04) rotate(-2deg);
+    box-shadow: 0 8px 32px rgba(255,182,185,0.25);
+}
+
+.love-message {
+    background: var(--primary);
+    color: var(--white);
+    text-align: center;
+    padding: 2rem 1rem;
+    border-radius: 24px;
+    margin: 2rem 1rem;
+    box-shadow: var(--shadow);
+}
+
+.love-message h2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+footer {
+    text-align: center;
+    padding: 1.2rem 0 0.5rem 0;
+    color: #888;
+    font-size: 1rem;
+    background: transparent;
+}
+
+.present-overlay {
+    position: fixed;
+    z-index: 2000;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: linear-gradient(135deg, #ffb6b9 60%, #bbded6 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.7s;
+}
+.present-overlay.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+.present-box {
+    position: relative;
+    width: 320px;
+    height: 220px;
+    background: #fff;
+    border-radius: 18px 18px 24px 24px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    cursor: pointer;
+    animation: bounce 1.5s infinite alternate;
+}
+@keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-18px); }
+}
+.lid {
+    position: absolute;
+    top: -48px;
+    left: 0;
+    width: 320px;
+    height: 60px;
+    background: #ffb6b9;
+    border-radius: 18px 18px 12px 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    z-index: 2;
+    transition: transform 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+}
+.present-box.open .lid {
+    transform: translateY(-120px) rotate(-18deg) scaleX(1.1);
+}
+.ribbon {
+    position: absolute;
+    top: -48px;
+    left: 50%;
+    width: 32px;
+    height: 220px;
+    background: #bbded6;
+    border-radius: 16px;
+    transform: translateX(-50%);
+    z-index: 3;
+}
+.gift-message {
+    padding: 2.2rem 1.2rem 1.2rem 1.2rem;
+    text-align: center;
+    color: #ffb6b9;
+    font-family: 'Montserrat', Arial, sans-serif;
+    z-index: 4;
+}
+.gift-message h2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+    color: #bbded6;
+}
+.gift-message p {
+    font-size: 1.1rem;
+    color: #444;
+}
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    .gallery img {
+        height: 140px;
+    }
+    .love-message {
+        margin: 1rem 0.2rem;
+        padding: 1.2rem 0.5rem;
+    }
+    .present-box, .lid { width: 90vw; }
+    .present-box { height: 160px; }
+    .lid { height: 40px; }
+}
